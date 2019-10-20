@@ -1,24 +1,35 @@
-import React from 'react';
+import React, {useState} from 'react';
 import axios from 'axios'
 import { useHistory } from "react-router-dom";
 import Login from './login'
 import Register from './register'
 import UserLocalStorage from "./services/userLocalStorage";
-const qs = require('querystring')
-
+import Button from 'react-bootstrap/Button';
+import ModalChangePassword from "./modalChangePassword";
+import gql from "graphql-tag";
+import {useQuery} from "@apollo/react-hooks";
+const qs = require('querystring');
+const FETCH_USER_AUTH = gql `{userAuths {userId}}`;
 
 export default function Home() {
+  const {data : user_auths} = useQuery(FETCH_USER_AUTH);
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   let userLocalStorage = new UserLocalStorage();
   let history = useHistory();
-  function handleClick(username, password) {
+  function handleClick(username, password='') {
     axios.post('http://localhost:4201/login',
       qs.stringify({username: username, password: password}),
       { headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
       }).then((res)=>{
-        console.log(res)
       if(res.data.passport.user.id) {
-        userLocalStorage.setUserId(res.data.passport.user.id)
-        history.push("/user-management");
+        if(!!user_auths.userAuths.find(auth => auth.userId === res.data.passport.user.id)){
+          userLocalStorage.setUserId(res.data.passport.user.id)
+          history.push("/user-management");
+        } else {
+          setShow(true)
+        }
       }
     });
   }
@@ -39,7 +50,9 @@ export default function Home() {
   return (
     <div>
       <Login handleClick={handleClick}/>
+      <Button variant="primary" onClick={handleShow}> Change Password</Button>
       <Register handleClick={handleRegister}/>
+      <ModalChangePassword show={show} handleShow={handleShow} handleClose={handleClose}/>
     </div>
   )
 }

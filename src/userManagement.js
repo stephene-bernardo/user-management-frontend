@@ -26,8 +26,6 @@ export default function UserManagement () {
   const userName = useRef(null);
   const { data } = useQuery(FETCH_USERS);
   const {data : user_auths} = useQuery(FETCH_USER_AUTH);
-  console.log('zzz')
-  console.log(user_auths)
   const [CreateUser]= useMutation(CREATE_USER, {refetchQueries: mutationResult => [{query: FETCH_USERS}]})
   const [DeleteUser]= useMutation(DELETE_USER, {refetchQueries: mutationResult => [{query: FETCH_USERS}]})
   const [UpdateUser]= useMutation(UPDATE_USER, {refetchQueries: mutationResult => [{query: FETCH_USERS}]})

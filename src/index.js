@@ -7,6 +7,7 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import {HttpLink} from "apollo-link-http";
 import {InMemoryCache} from "apollo-cache-inmemory";
 import {ApolloClient} from "apollo-client";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const link = new HttpLink({
   uri: 'http://localhost:4201/graphql'
