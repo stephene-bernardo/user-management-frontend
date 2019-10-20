@@ -7,25 +7,17 @@ export default class UserManagementBackendApi{
   }
 
   changePassword(username, password){
-    return axios.patch(`${this.baseUrl}/change-password`,{
-      "username": username.current.value,
-      "password": password.current.value,
-    });
+    return axios.patch(`${this.baseUrl}/change-password`,{username, password});
   }
 
   login(username, password){
     return axios.post(`${this.baseUrl}/login`,
-      qs.stringify({username: username, password: password}),
+      qs.stringify({username, password}),
       { headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
       })
   }
 
   register(username, firstname, lastname, password){
-    return axios.post(`${this.baseUrl}/register`,{
-      "username": username,
-      "lastname": firstname,
-      "firstname": lastname,
-      "password": password
-    })
+    return axios.post(`${this.baseUrl}/register`,{username, firstname, lastname, password})
   }
 }

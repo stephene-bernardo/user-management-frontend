@@ -1,6 +1,5 @@
 import Modal from "react-bootstrap/Modal";
 import React, {useRef, useState} from "react";
-import axios from "axios";
 import UserManagementBackendApi from './services/userManagementBackendApi'
 
 export default function ModalChangePassword (props){
@@ -16,7 +15,7 @@ export default function ModalChangePassword (props){
     } else if(password.current.value !== password2.current.value) {
       setErrorMessage('Password does not match')
     }else {
-      userManagementBackendApi.changePassword(username, password)
+      userManagementBackendApi.changePassword(username.current.value, password.current.value)
       props.handleClose();
       event.preventDefault();
     }
