@@ -7,8 +7,9 @@ import UserLocalStorage from "./services/userLocalStorage";
 import ModalChangePassword from "./modalChangePassword";
 import gql from "graphql-tag";
 import {useQuery} from "@apollo/react-hooks";
-const qs = require('querystring');
+import UserManagementBackendApi from './services/userManagementBackendApi'
 const FETCH_USER_AUTH = gql `{userAuths {userId}}`;
+
 
 
 export default function Home(props) {
@@ -18,11 +19,9 @@ export default function Home(props) {
   const handleShow = () => setShow(true);
   let userLocalStorage = new UserLocalStorage();
   let history = useHistory();
+  let userManagementBackendApi = new UserManagementBackendApi();
   function handleClick(username, password='') {
-    axios.post('http://localhost:4201/login',
-      qs.stringify({username: username, password: password}),
-      { headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-      }).then((res)=>{
+    userManagementBackendApi.login(username, password).then((res)=>{
       if(res.data.passport && res.data.passport.user.id) {
         if(!!data.userAuths.find(auth => auth.userId === res.data.passport.user.id)){
           userLocalStorage.setUserId(res.data.passport.user.id)
@@ -36,12 +35,7 @@ export default function Home(props) {
     });
   }
   function handleRegister(username, firstname, lastname, password){
-    axios.post('http://localhost:4201/register',{
-      "username": username,
-      "lastname": firstname,
-      "firstname": lastname,
-      "password": password
-    }).then(res=> {
+    userManagementBackendApi.register(username, firstname, lastname, password).then(res=> {
       if(res.data.id){
         userLocalStorage.setUserId(res.data.id)
         props.changeFirstName(firstname);

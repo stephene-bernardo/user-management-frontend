@@ -1,12 +1,14 @@
 import Modal from "react-bootstrap/Modal";
 import React, {useRef, useState} from "react";
 import axios from "axios";
+import UserManagementBackendApi from './services/userManagementBackendApi'
 
 export default function ModalChangePassword (props){
   const username = useRef(null);
   const password = useRef(null);
   const password2 = useRef(null);
-  let [errorMessage, setErrorMessage] = useState('')
+  let [errorMessage, setErrorMessage] = useState('');
+  let userManagementBackendApi = new UserManagementBackendApi();
 
   function handleClick(event){
     if(!username.current.value || !password.current.value || !password2.current.value){
@@ -14,10 +16,7 @@ export default function ModalChangePassword (props){
     } else if(password.current.value !== password2.current.value) {
       setErrorMessage('Password does not match')
     }else {
-      axios.patch('http://localhost:4201/change-password',{
-        "username": username.current.value,
-        "password": password.current.value,
-      });
+      userManagementBackendApi.changePassword(username, password)
       props.handleClose();
       event.preventDefault();
     }
@@ -54,12 +53,8 @@ export default function ModalChangePassword (props){
           </form>
       </Modal.Body>
       <Modal.Footer>
-        <button onClick={props.handleClose}>
-          Close
-        </button>
-        <button onClick={handleClick}>
-          Change Password
-        </button>
+        <button onClick={props.handleClose}> Close</button>
+        <button onClick={handleClick}>Change Password</button>
       </Modal.Footer>
     </Modal>
   )
