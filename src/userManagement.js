@@ -46,10 +46,7 @@ export default function UserManagement () {
   let tableEntry = [];
   if(data && data.users){
     tableEntry =  data.users.map(value => {
-        if(userLocalStorage.getUserId() === value.id+''){
-          return {...value, hasPassword: true}
-        }
-        else if(userAuth){
+        if(userAuth){
           return {...value, hasPassword: !!userAuth.userAuths.find(auth => auth.userId === value.id)}
         }
         return {...value, hasPassword: false}

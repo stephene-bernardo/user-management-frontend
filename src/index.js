@@ -8,9 +8,10 @@ import {HttpLink} from "apollo-link-http";
 import {InMemoryCache} from "apollo-cache-inmemory";
 import {ApolloClient} from "apollo-client";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {BASE_URL} from "./constant";
 
 const link = new HttpLink({
-  uri: 'http://localhost:4201/graphql'
+  uri: `${BASE_URL}/graphql`
 });
 const cache = new InMemoryCache();
 const client = new ApolloClient({

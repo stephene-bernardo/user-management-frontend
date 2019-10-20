@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import axios from 'axios'
 import { useHistory } from "react-router-dom";
 import Login from './login'
 import Register from './register'
@@ -13,7 +12,7 @@ const FETCH_USER_AUTH = gql `{userAuths {userId}}`;
 
 
 export default function Home(props) {
-  const {data} = useQuery(FETCH_USER_AUTH,  {pollInterval: 1});
+  const {data} = useQuery(FETCH_USER_AUTH,  {pollInterval: 2});
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
