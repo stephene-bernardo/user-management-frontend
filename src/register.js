@@ -7,7 +7,11 @@ export default function Register(props){
   const lastname = useRef(null);
   const password = useRef(null);
   function handleClick(event) {
-    // props.handleClick(username.current.value, password.current.value)
+    props.handleClick(
+      username.current.value,
+      firstname.current.value,
+      lastname.current.value,
+      password.current.value)
     event.preventDefault();
   }
 
@@ -19,11 +23,11 @@ export default function Register(props){
       </label>
       <label>
         firsname:
-        <input ref={firstname} type="text" name="username" />
+        <input ref={firstname} type="text" name="firstname" />
       </label>
       <label>
         lastname:
-        <input ref={lastname} type="text" name="username" />
+        <input ref={lastname} type="text" name="lastname" />
       </label>
       <label>
         password:

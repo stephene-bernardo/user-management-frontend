@@ -15,23 +15,31 @@ export default function Home(){
       qs.stringify({username: username, password: password}),
       { headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
       }).then((res)=>{
-      if(res.data.passport.user.id){
+        console.log(res)
+      if(res.data.passport.user.id) {
         userLocalStorage.setUserId(res.data.passport.user.id)
         history.push("/user-management");
       }
     });
-
-    const options = {
-      headers: {'userid': localStorage.getItem('userid')}
-    };
-    axios.get('http://localhost:4201/profile', options).then(res=>{
-      console.log(res)
+  }
+  function handleRegister(username, firstname, lastname, password){
+    axios.post('http://localhost:4201/register',{
+      "username": username,
+      "lastname": firstname,
+      "firstname": lastname,
+      "password": password
+    }).then(res=> {
+      if(res.data.id){
+        userLocalStorage.setUserId(res.data.id)
+        history.push("/user-management");
+      }
     })
   }
+
   return (
     <div>
       <Login handleClick={handleClick}/>
-      <Register/>
+      <Register handleClick={handleRegister}/>
     </div>
   )
 }

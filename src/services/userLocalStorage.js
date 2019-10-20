@@ -5,6 +5,6 @@ export default class UserLocalStorage {
     localStorage.setItem(USERID_PROPERTY, id)
   }
   getUserId(){
-    localStorage.getItem(USERID_PROPERTY)
+    return localStorage.getItem(USERID_PROPERTY)
   }
 }

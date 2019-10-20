@@ -16,6 +16,7 @@ const UPDATE_USER = gql `mutation UpdateUser($id: Int!, $firstName: String!, $la
 export default function UserManagement () {
   let userLocalStorage = new UserLocalStorage()
   let history = useHistory();
+  console.log(userLocalStorage.getUserId())
   if(!userLocalStorage.getUserId()){
     history.push("/");
   }
