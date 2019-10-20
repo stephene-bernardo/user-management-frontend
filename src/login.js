@@ -20,11 +20,11 @@ export default function Login(props){
 
       <div className="form-group">
         <label htmlFor="passwordInput">Password</label>
-        <input type="text" ref={password} className="form-control" id="passwordInput" placeholder="Password"/>
+        <input type="password" ref={password} className="form-control" id="passwordInput" placeholder="Password"/>
       </div>
 
       <input  type="submit" value="Login" />
-      <button onClick={props.modalShow}> Change Password</button>
+      <button style={{marginLeft: 10 + 'px'}}  class="login" onClick={props.modalShow}> Change Password</button>
     </form>
 
   )

@@ -1,5 +1,4 @@
 import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
 import React, {useRef, useState} from "react";
 import axios from "axios";
 
@@ -18,8 +17,8 @@ export default function ModalChangePassword (props){
       axios.patch('http://localhost:4201/change-password',{
         "username": username.current.value,
         "password": password.current.value,
-      })
-      props.handleClose()
+      });
+      props.handleClose();
       event.preventDefault();
     }
   }
@@ -31,28 +30,36 @@ export default function ModalChangePassword (props){
       <Modal.Body>
           <form onSubmit={handleClick}>
             <div className="form-group">
-              <label htmlFor="usernameInput">Username</label>
-              <input type="text" ref={username} className="form-control" id="usernameInput" placeholder="Username"/>
+              <label htmlFor="usernameInputModal">Username</label>
+              <input type="text" ref={username}
+                     className="form-control"
+                     id="usernameInputModal"
+                     placeholder="Username"/>
             </div>
             <div className="form-group">
-              <label htmlFor="passwordInput">Password</label>
-              <input type="text" ref={password} className="form-control" id="passwordInput" placeholder="Password"/>
+              <label htmlFor="passwordInputModal">Password</label>
+              <input type="password" ref={password}
+                     className="form-control"
+                     id="passwordInputModal"
+                     placeholder="Password"/>
             </div>
             <div className="form-group">
-              <label htmlFor="password2Input">Password</label>
-              <input type="text" ref={password2} className="form-control" id="password2Input" placeholder="password2"/>
+              <label htmlFor="password2InputModal">Password</label>
+              <input type="password" ref={password2}
+                     className="form-control"
+                     id="password2InputModal"
+                     placeholder="Password"/>
             </div>
-            <p class='errormessage'>{errorMessage}</p>
+            <p className='errormessage'>{errorMessage}</p>
           </form>
-
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={props.handleClose}>
+        <button onClick={props.handleClose}>
           Close
-        </Button>
-        <Button variant="primary" onClick={handleClick}>
+        </button>
+        <button onClick={handleClick}>
           Change Password
-        </Button>
+        </button>
       </Modal.Footer>
     </Modal>
   )

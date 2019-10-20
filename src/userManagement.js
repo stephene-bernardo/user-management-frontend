@@ -24,10 +24,9 @@ export default function UserManagement () {
   const firstName = useRef(null);
   const lastName = useRef(null);
   const userName = useRef(null);
-  const {data: userdata, loading:loadingUser } = useQuery(FETCH_USERS);
-  const {data: userAuth, loading:loadingAuth} = useQuery(FETCH_USER_AUTH);
 
-
+  const {data: userAuth} = useQuery(FETCH_USER_AUTH);
+  const {data} = useQuery(FETCH_USERS);
   const [CreateUser]= useMutation(CREATE_USER, {refetchQueries: mutationResult => [{query: FETCH_USERS}]})
   const [DeleteUser]= useMutation(DELETE_USER, {refetchQueries: mutationResult => [{query: FETCH_USERS}]})
   const [UpdateUser]= useMutation(UPDATE_USER, {refetchQueries: mutationResult => [{query: FETCH_USERS}]})
@@ -45,8 +44,8 @@ export default function UserManagement () {
     handleClear();
   }
   let tableEntry = [];
-  if(userdata && userdata.users && !loadingUser && !loadingAuth){
-    tableEntry =  userdata.users.map(value => {
+  if(data && data.users){
+    tableEntry =  data.users.map(value => {
         if(userLocalStorage.getUserId() === value.id+''){
           return {...value, hasPassword: true}
         }

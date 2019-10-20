@@ -19,20 +19,20 @@ export default function Register(props){
     <form className="register" onSubmit={handleClick}>
       <h1>Register User</h1>
       <div className="form-group">
-        <label htmlFor="usernameInput">Username</label>
-        <input type="text" ref={username} className="form-control" id="usernameInput" placeholder="Username"/>
+        <label htmlFor="usernameInputRegister">Username</label>
+        <input type="text" ref={username} className="form-control" id="usernameInputRegister" placeholder="Username"/>
       </div>
       <div className="form-group">
-        <label htmlFor="firsnameInput">Firstname</label>
-        <input type="text" ref={firstname} className="form-control" id="firsnameInput" placeholder="Firstname"/>
+        <label htmlFor="firsnameInputRegister">Firstname</label>
+        <input type="text" ref={firstname} className="form-control" id="firsnameInputRegister" placeholder="Firstname"/>
       </div>
       <div className="form-group">
-        <label htmlFor="lastnameInput">Lastname</label>
-        <input type="text" ref={lastname} className="form-control" id="lastnameInput" placeholder="Lastname"/>
+        <label htmlFor="lastnameInputRegister">Lastname</label>
+        <input type="text" ref={lastname} className="form-control" id="lastnameInputRegister" placeholder="Lastname"/>
       </div>
       <div className="form-group">
-        <label htmlFor="lastnameInput">Password</label>
-        <input type="text" ref={password} className="form-control" id="passwordInput" placeholder="Password"/>
+        <label htmlFor="lastnameInputRegister">Password</label>
+        <input type="password" ref={password} className="form-control" id="passwordInputRegister" placeholder="Password"/>
       </div>
 
       <input  type="submit" value="Register & Login" />

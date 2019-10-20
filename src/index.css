@@ -1,3 +1,4 @@
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -6,12 +7,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+@import url('https://fonts.googleapis.com/css?family=ZCOOL+XiaoWei&display=swap');
+.navbar-brand {
+  font-family: 'ZCOOL XiaoWei', serif;
 }
-
 .register {
   display: inline-block;
   width: 55%;

@@ -11,7 +11,7 @@ const qs = require('querystring');
 const FETCH_USER_AUTH = gql `{userAuths {userId}}`;
 
 
-export default function Home() {
+export default function Home(props) {
   const {data : user_auths} = useQuery(FETCH_USER_AUTH);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -26,6 +26,10 @@ export default function Home() {
       if(res.data.passport && res.data.passport.user.id) {
         if(!!user_auths.userAuths.find(auth => auth.userId === res.data.passport.user.id)){
           userLocalStorage.setUserId(res.data.passport.user.id)
+          props.changeFirstName(res.data.passport.user.firstName);
+          props.changeLastName(res.data.passport.user.lastName);
+          userLocalStorage.setFirstName(res.data.passport.user.firstName)
+          userLocalStorage.setLastName(res.data.passport.user.lastName)
           history.push("/user-management");
         }
       }
@@ -39,17 +43,21 @@ export default function Home() {
       "password": password
     }).then(res=> {
       if(res.data.id){
+        userLocalStorage.setUserId(res.data.id)
+        props.changeFirstName(firstname);
+        props.changeLastName(lastname);
+        userLocalStorage.setFirstName(firstname)
+        userLocalStorage.setLastName(lastname)
         userLocalStorage.setUserId(res.data.id);
-        history.push("/user-management");
+        history.push("/user-management/");
       }
     })
   }
 
   return (
     <div className="containing-div">
-      <Register  handleClick={handleRegister}/>
+      <Register handleClick={handleRegister}/>
       <Login handleClick={handleClick} modalShow={handleShow}/>
-
       <ModalChangePassword show={show} handleShow={handleShow} handleClose={handleClose}/>
     </div>
   )
