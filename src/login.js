@@ -24,7 +24,7 @@ export default function Login(props){
       </div>
 
       <input  type="submit" value="Login" />
-      <button style={{marginLeft: 10 + 'px'}}  class="login" onClick={props.modalShow}> Change Password</button>
+      <button style={{marginLeft: 10 + 'px'}} onClick={props.modalShow}> Change Password</button>
     </form>
 
   )

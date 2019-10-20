@@ -12,7 +12,7 @@ const FETCH_USER_AUTH = gql `{userAuths {userId}}`;
 
 
 export default function Home(props) {
-  const {data : user_auths} = useQuery(FETCH_USER_AUTH);
+  const {data} = useQuery(FETCH_USER_AUTH,  {pollInterval: 1});
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -24,7 +24,7 @@ export default function Home(props) {
       { headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
       }).then((res)=>{
       if(res.data.passport && res.data.passport.user.id) {
-        if(!!user_auths.userAuths.find(auth => auth.userId === res.data.passport.user.id)){
+        if(!!data.userAuths.find(auth => auth.userId === res.data.passport.user.id)){
           userLocalStorage.setUserId(res.data.passport.user.id)
           props.changeFirstName(res.data.passport.user.firstName);
           props.changeLastName(res.data.passport.user.lastName);
