@@ -12,7 +12,8 @@ const CREATE_USER = gql`mutation CreateUser($firstName: String!, $lastName: Stri
 const DELETE_USER = gql `mutation DeleteUser($id:Int!){deleteUser(id: $id)}`;
 const UPDATE_USER = gql `mutation UpdateUser($id: Int!, $firstName: String!, $lastName: String!, $userName: String!)
 {updateUser(id: $id, userInput: {firstName: $firstName, lastName: $lastName, userName: $userName})}`
-const FETCH_USER_AUTH = gql `{userAuths {userId}}`
+const FETCH_USER_AUTH = gql `{userAuths {userId}}`;
+const DELETE_USER_AUTH = gql `mutation DeleteUserAuth($userId: Int!){deleteUserAuth(userId: $userId)}`;
 
 export default function UserManagement () {
   let userLocalStorage = new UserLocalStorage()
@@ -30,6 +31,8 @@ export default function UserManagement () {
   const [CreateUser]= useMutation(CREATE_USER, {refetchQueries: mutationResult => [{query: FETCH_USERS}]})
   const [DeleteUser]= useMutation(DELETE_USER, {refetchQueries: mutationResult => [{query: FETCH_USERS}]})
   const [UpdateUser]= useMutation(UPDATE_USER, {refetchQueries: mutationResult => [{query: FETCH_USERS}]})
+  const [DeleteUserAuth] = useMutation(DELETE_USER_AUTH, {refetchQueries: mutationResult => [{query: FETCH_USER_AUTH}]})
+
   function handleClear(){
     firstName.current.value = '';
     lastName.current.value = '';
@@ -54,6 +57,7 @@ export default function UserManagement () {
       .map(value=> <User key={value.id}
                          handleEditButton={UpdateUser}
                          handleDeleteButton={DeleteUser}
+                         handleResetButton={DeleteUserAuth}
                          value={value}/>)
   }
   return (

@@ -38,7 +38,12 @@ export default function User (props) {
   }
   let resetButton = {};
   if(props.value.hasPassword){
-    resetButton = (<td><button>Reset Password</button></td>)
+    resetButton = (
+      <td>
+        <button onClick={() => props.handleResetButton({variables: {userId: props.value.id}})}>
+          Reset Password
+        </button>
+      </td>)
   } else {
     resetButton = (<td>Password Does Not Exist</td>)
   }
