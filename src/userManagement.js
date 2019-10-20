@@ -3,6 +3,9 @@ import {useQuery, useMutation} from "@apollo/react-hooks";
 import gql from 'graphql-tag';
 import  { useRef } from 'react'
 import User from "./user";
+import { useHistory } from "react-router-dom";
+import UserLocalStorage from "./services/userLocalStorage";
+
 const FETCH_USERS = gql`{users {id, firstName, lastName, userName}}`;
 const CREATE_USER = gql`mutation CreateUser($firstName: String!, $lastName: String!, $userName: String!)
      {createUser(user: {firstName:$firstName, lastName:$lastName, userName: $userName}){id}}`;
@@ -11,6 +14,11 @@ const UPDATE_USER = gql `mutation UpdateUser($id: Int!, $firstName: String!, $la
 {updateUser(id: $id, userInput: {firstName: $firstName, lastName: $lastName, userName: $userName})}`
 
 export default function UserManagement () {
+  let userLocalStorage = new UserLocalStorage()
+  let history = useHistory();
+  if(!userLocalStorage.getUserId()){
+    history.push("/");
+  }
   const firstName = useRef(null);
   const lastName = useRef(null);
   const userName = useRef(null);

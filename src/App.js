@@ -6,6 +6,7 @@ import {
   Route,
 } from "react-router-dom";
 import UserManagement from "./userManagement";
+import Home from "./home"
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
           <UserManagement></UserManagement>
         </Route>
         <Route path="/">
-          <h1>HOME</h1>
+          <Home></Home>
         </Route>
       </Switch>
     </Router>
