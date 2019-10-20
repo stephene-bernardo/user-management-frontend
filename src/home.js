@@ -7,7 +7,7 @@ import UserLocalStorage from "./services/userLocalStorage";
 const qs = require('querystring')
 
 
-export default function Home(){
+export default function Home() {
   let userLocalStorage = new UserLocalStorage();
   let history = useHistory();
   function handleClick(username, password) {

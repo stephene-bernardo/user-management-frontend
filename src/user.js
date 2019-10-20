@@ -1,5 +1,5 @@
 import React from "react";
-import  { useRef, useState  } from 'react'
+import  { useRef, useState  } from 'react';
 
 export default function User (props) {
   const [isEditing, setIsEditing] = useState(false);
@@ -36,10 +36,17 @@ export default function User (props) {
       </React.Fragment>
     )
   }
+  let resetButton = {};
+  if(props.value.hasPassword){
+    resetButton = (<td><button>Reset Password</button></td>)
+  } else {
+    resetButton = (<td>Password Does Not Exist</td>)
+  }
   return (
     <tr>
       {toggle}
       <td><button onClick={()=>props.handleDeleteButton({variables: {id: props.value.id}})}>remove</button></td>
+      {resetButton}
     </tr>
   )
 }

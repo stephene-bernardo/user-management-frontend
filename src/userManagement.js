@@ -12,11 +12,11 @@ const CREATE_USER = gql`mutation CreateUser($firstName: String!, $lastName: Stri
 const DELETE_USER = gql `mutation DeleteUser($id:Int!){deleteUser(id: $id)}`;
 const UPDATE_USER = gql `mutation UpdateUser($id: Int!, $firstName: String!, $lastName: String!, $userName: String!)
 {updateUser(id: $id, userInput: {firstName: $firstName, lastName: $lastName, userName: $userName})}`
+const FETCH_USER_AUTH = gql `{userAuths {userId}}`
 
 export default function UserManagement () {
   let userLocalStorage = new UserLocalStorage()
   let history = useHistory();
-  console.log(userLocalStorage.getUserId())
   if(!userLocalStorage.getUserId()){
     history.push("/");
   }
@@ -24,6 +24,9 @@ export default function UserManagement () {
   const lastName = useRef(null);
   const userName = useRef(null);
   const { data } = useQuery(FETCH_USERS);
+  const {data : user_auths} = useQuery(FETCH_USER_AUTH);
+  console.log('zzz')
+  console.log(user_auths)
   const [CreateUser]= useMutation(CREATE_USER, {refetchQueries: mutationResult => [{query: FETCH_USERS}]})
   const [DeleteUser]= useMutation(DELETE_USER, {refetchQueries: mutationResult => [{query: FETCH_USERS}]})
   const [UpdateUser]= useMutation(UPDATE_USER, {refetchQueries: mutationResult => [{query: FETCH_USERS}]})
@@ -36,10 +39,17 @@ export default function UserManagement () {
     CreateUser({variables: {firstName: firstName.current.value, lastName: lastName.current.value,
         userName: userName.current.value
     }})
+    handleClear();
   }
   let tableEntry = [];
   if(data && data.users){
     tableEntry =  data.users
+      .map(value => {
+        if(user_auths){
+          return {...value, hasPassword: !!user_auths.userAuths.find(auth => auth.userId === value.id)}
+        }
+        return {...value, hasPassword: false}
+      })
       .sort(({ id: previousID }, { id: currentID }) => previousID - currentID)
       .map(value=> <User key={value.id}
                          handleEditButton={UpdateUser}
