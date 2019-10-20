@@ -1,6 +1,5 @@
 import React from "react";
 import  { useRef  } from 'react'
-import Button from 'react-bootstrap/Button';
 
 export default function Login(props){
   const username = useRef(null);
@@ -25,7 +24,7 @@ export default function Login(props){
       </div>
 
       <input  type="submit" value="Login" />
-      <a onClick={props.modalShow}> Change Password</a>
+      <button onClick={props.modalShow}> Change Password</button>
     </form>
 
   )

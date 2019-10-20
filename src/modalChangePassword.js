@@ -42,7 +42,7 @@ export default function ModalChangePassword (props){
               <label htmlFor="password2Input">Password</label>
               <input type="text" ref={password2} className="form-control" id="password2Input" placeholder="password2"/>
             </div>
-            <p>{errorMessage}</p>
+            <p class='errormessage'>{errorMessage}</p>
           </form>
 
       </Modal.Body>

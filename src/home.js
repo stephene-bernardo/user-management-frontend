@@ -4,13 +4,9 @@ import { useHistory } from "react-router-dom";
 import Login from './login'
 import Register from './register'
 import UserLocalStorage from "./services/userLocalStorage";
-import Button from 'react-bootstrap/Button';
 import ModalChangePassword from "./modalChangePassword";
 import gql from "graphql-tag";
 import {useQuery} from "@apollo/react-hooks";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 const qs = require('querystring');
 const FETCH_USER_AUTH = gql `{userAuths {userId}}`;
 
@@ -43,7 +39,7 @@ export default function Home() {
       "password": password
     }).then(res=> {
       if(res.data.id){
-        userLocalStorage.setUserId(res.data.id)
+        userLocalStorage.setUserId(res.data.id);
         history.push("/user-management");
       }
     })

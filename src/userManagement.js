@@ -1,7 +1,7 @@
 import React from 'react';
 import {useQuery, useMutation} from "@apollo/react-hooks";
 import gql from 'graphql-tag';
-import  { useRef, useEffect } from 'react'
+import  { useRef } from 'react'
 import User from "./user";
 import { useHistory } from "react-router-dom";
 import UserLocalStorage from "./services/userLocalStorage";
@@ -24,8 +24,10 @@ export default function UserManagement () {
   const firstName = useRef(null);
   const lastName = useRef(null);
   const userName = useRef(null);
-  const { data, loading } = useQuery(FETCH_USERS);
-  const {data : user_auths} = useQuery(FETCH_USER_AUTH);
+  const {data: userdata, loading:loadingUser } = useQuery(FETCH_USERS);
+  const {data: userAuth, loading:loadingAuth} = useQuery(FETCH_USER_AUTH);
+
+
   const [CreateUser]= useMutation(CREATE_USER, {refetchQueries: mutationResult => [{query: FETCH_USERS}]})
   const [DeleteUser]= useMutation(DELETE_USER, {refetchQueries: mutationResult => [{query: FETCH_USERS}]})
   const [UpdateUser]= useMutation(UPDATE_USER, {refetchQueries: mutationResult => [{query: FETCH_USERS}]})
@@ -43,11 +45,13 @@ export default function UserManagement () {
     handleClear();
   }
   let tableEntry = [];
-  if(data && data.users){
-    tableEntry =  data.users
-      .map(value => {
-        if(user_auths){
-          return {...value, hasPassword: !!user_auths.userAuths.find(auth => auth.userId === value.id)}
+  if(userdata && userdata.users && !loadingUser && !loadingAuth){
+    tableEntry =  userdata.users.map(value => {
+        if(userLocalStorage.getUserId() === value.id+''){
+          return {...value, hasPassword: true}
+        }
+        else if(userAuth){
+          return {...value, hasPassword: !!userAuth.userAuths.find(auth => auth.userId === value.id)}
         }
         return {...value, hasPassword: false}
       })
