@@ -1,24 +1,27 @@
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import React, {useRef} from "react";
+import React, {useRef, useState} from "react";
 import axios from "axios";
 
 export default function ModalChangePassword (props){
   const username = useRef(null);
   const password = useRef(null);
   const password2 = useRef(null);
-  function handleClick(event){
-    // props.handleClick(
-    //   username.current.value,
-    //   password.current.value,
-    //   password2.current.value,)
+  let [errorMessage, setErrorMessage] = useState('')
 
-    axios.patch('http://localhost:4201/change-password',{
-      "username": username.current.value,
-      "password": password.current.value,
-    })
-    console.log('asdfsd')
-    event.preventDefault();
+  function handleClick(event){
+    if(!username.current.value || !password.current.value || !password2.current.value){
+      setErrorMessage('Cannot Submit Empty Fields')
+    } else if(password.current.value !== password2.current.value) {
+      setErrorMessage('Password does not match')
+    }else {
+      axios.patch('http://localhost:4201/change-password',{
+        "username": username.current.value,
+        "password": password.current.value,
+      })
+      props.handleClose()
+      event.preventDefault();
+    }
   }
   return (
     <Modal show={props.show} onHide={props.handleClose} animation={false}>
@@ -26,20 +29,20 @@ export default function ModalChangePassword (props){
         <Modal.Title>Change password</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-
           <form onSubmit={handleClick}>
-            <label>
-              username:
-              <input ref={username} type="text" name="username" />
-            </label>
-            <label>
-              password:
-              <input ref={password} type="text" name="password" />
-            </label>
-            <label>
-              Re-type password:
-              <input ref={password2} type="text" name="password2" />
-            </label>
+            <div className="form-group">
+              <label htmlFor="usernameInput">Username</label>
+              <input type="text" ref={username} className="form-control" id="usernameInput" placeholder="Username"/>
+            </div>
+            <div className="form-group">
+              <label htmlFor="passwordInput">Password</label>
+              <input type="text" ref={password} className="form-control" id="passwordInput" placeholder="Password"/>
+            </div>
+            <div className="form-group">
+              <label htmlFor="password2Input">Password</label>
+              <input type="text" ref={password2} className="form-control" id="password2Input" placeholder="password2"/>
+            </div>
+            <p>{errorMessage}</p>
           </form>
 
       </Modal.Body>

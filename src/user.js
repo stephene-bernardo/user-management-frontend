@@ -21,7 +21,7 @@ export default function User (props) {
   let toggle;
   if(!isEditing){
     toggle = (<React.Fragment>
-      <td>{props.value.userName}</td>
+      <th>{props.value.userName}</th>
       <td>{props.value.firstName}</td>
       <td>{props.value.lastName}</td>
       <td><button onClick={handleEdit}>edit</button></td>

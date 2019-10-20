@@ -16,23 +16,24 @@ export default function Register(props){
   }
 
   return (
-    <form onSubmit={handleClick}>
-      <label>
-        username:
-        <input ref={username} type="text" name="username" />
-      </label>
-      <label>
-        firsname:
-        <input ref={firstname} type="text" name="firstname" />
-      </label>
-      <label>
-        lastname:
-        <input ref={lastname} type="text" name="lastname" />
-      </label>
-      <label>
-        password:
-        <input type="text"  ref={password} name="password" />
-      </label>
+    <form className="register" onSubmit={handleClick}>
+      <h1>Register User</h1>
+      <div className="form-group">
+        <label htmlFor="usernameInput">Username</label>
+        <input type="text" ref={username} className="form-control" id="usernameInput" placeholder="Username"/>
+      </div>
+      <div className="form-group">
+        <label htmlFor="firsnameInput">Firstname</label>
+        <input type="text" ref={firstname} className="form-control" id="firsnameInput" placeholder="Firstname"/>
+      </div>
+      <div className="form-group">
+        <label htmlFor="lastnameInput">Lastname</label>
+        <input type="text" ref={lastname} className="form-control" id="lastnameInput" placeholder="Lastname"/>
+      </div>
+      <div className="form-group">
+        <label htmlFor="lastnameInput">Password</label>
+        <input type="text" ref={password} className="form-control" id="passwordInput" placeholder="Password"/>
+      </div>
 
       <input  type="submit" value="Register & Login" />
     </form>

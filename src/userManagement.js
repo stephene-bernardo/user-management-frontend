@@ -1,7 +1,7 @@
 import React from 'react';
 import {useQuery, useMutation} from "@apollo/react-hooks";
 import gql from 'graphql-tag';
-import  { useRef } from 'react'
+import  { useRef, useEffect } from 'react'
 import User from "./user";
 import { useHistory } from "react-router-dom";
 import UserLocalStorage from "./services/userLocalStorage";
@@ -24,7 +24,7 @@ export default function UserManagement () {
   const firstName = useRef(null);
   const lastName = useRef(null);
   const userName = useRef(null);
-  const { data } = useQuery(FETCH_USERS);
+  const { data, loading } = useQuery(FETCH_USERS);
   const {data : user_auths} = useQuery(FETCH_USER_AUTH);
   const [CreateUser]= useMutation(CREATE_USER, {refetchQueries: mutationResult => [{query: FETCH_USERS}]})
   const [DeleteUser]= useMutation(DELETE_USER, {refetchQueries: mutationResult => [{query: FETCH_USERS}]})
@@ -39,7 +39,7 @@ export default function UserManagement () {
   function handleClick(){
     CreateUser({variables: {firstName: firstName.current.value, lastName: lastName.current.value,
         userName: userName.current.value
-    }})
+    }});
     handleClear();
   }
   let tableEntry = [];
@@ -59,14 +59,15 @@ export default function UserManagement () {
                          value={value}/>)
   }
   return (
-    <table>
+    <table className="table">
       <thead>
       <tr>
-        <th>User Name</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th></th>
-        <th></th>
+        <th scope="col">User Name</th>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
       </tr>
       </thead>
       <tbody>

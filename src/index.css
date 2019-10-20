@@ -11,3 +11,24 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.register {
+  display: inline-block;
+  width: 65%;
+  padding: 1px 20%;
+}
+.signin {
+  display: inline-block;
+  width: 35%;
+  padding-right: 5%;
+}
+.containing-div {
+  display: flex;
+}
+div form {
+  padding: 50px 10px;
+}
+form label {
+  /*margin-bottom: 30px;*/
+  display: block;
+}
