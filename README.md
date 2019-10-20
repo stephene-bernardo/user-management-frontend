@@ -1,6 +1,6 @@
 ## Requirements 
 #### user-manangement-backend
-*user backend must be running in localhost:3001
+* user backend must be running in localhost:3001
 ## Setting up and running backend locally
 
 #### Install dependency
