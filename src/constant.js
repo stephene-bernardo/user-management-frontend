@@ -1,1 +1,1 @@
-export let BASE_URL = 'http://localhost:3001';
+export let BASE_URL = process.env.REACT_APP_USER_MANAGEMENT_BACKEND || 'http://localhost:3001';
