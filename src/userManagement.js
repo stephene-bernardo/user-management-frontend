@@ -10,13 +10,19 @@ import {FETCH_USERS,
   DELETE_USER, UPDATE_USER,
   DELETE_USER_AUTH, 
   FETCH_USER_AUTH} from './gqlquery'
+import UserManagementBackendApi from './services/userManagementBackendApi'
 
 export default function UserManagement (props) {
+  let userManagementBackendApi = new UserManagementBackendApi();
   let userLocalStorage = new UserLocalStorage()
   let history = useHistory();
-  if(!userLocalStorage.getUserId()){
+  userManagementBackendApi.profile().then(res => {
+    if(!res.data.passport || !res.data.passport.user.firstName){
+     history.push("/");
+    }
+  }).catch(()=>{
     history.push("/");
-  }
+  })
   const firstName = useRef(null);
   const lastName = useRef(null);
   const userName = useRef(null);

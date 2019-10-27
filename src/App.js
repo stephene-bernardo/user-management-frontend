@@ -11,20 +11,26 @@ import Home from "./home"
 import UserLocalStorage from "./services/userLocalStorage"
 import {useQuery} from "@apollo/react-hooks";
 import {FETCH_USER_AUTH, FETCH_USERS} from "./gqlquery"
+import UserManagementBackendApi from './services/userManagementBackendApi'
 
 
 function App() {
-  const {data: userAuth} = useQuery(FETCH_USER_AUTH, {pollInterval: 2});
-  const {data: fetchUsers} = useQuery(FETCH_USERS, {pollInterval: 2});
-  let userLocalStorage = new UserLocalStorage();
-  let [firstName ,setFirstName] = useState(userLocalStorage.getFirstName);
-  let [lastName ,setLastName] = useState(userLocalStorage.getLastName);
+  const {data: userAuth} = useQuery(FETCH_USER_AUTH, {pollInterval: 3});
+  const {data: fetchUsers} = useQuery(FETCH_USERS, {pollInterval: 3});
+  let userManagementBackendApi = new UserManagementBackendApi();
+  let [firstName ,setFirstName] = useState('');
+  let [lastName ,setLastName] = useState('');
+  userManagementBackendApi.profile().then(res => {
+    if(res.data.passport && res.data.passport.user.firstName){
+      setFirstName(res.data.passport.user.firstName);
+      setLastName(res.data.passport.user.lastName);
+    }
+  })
+
   function onLogout(){
     setFirstName('')
     setLastName('')
-    userLocalStorage.setLastName('')
-    userLocalStorage.setFirstName('')
-    userLocalStorage.setUserId('')
+    userManagementBackendApi.logout();
   }
   let greetings= firstName && lastName? `${firstName} ${lastName}`: 'Guest'
   return (

@@ -11,11 +11,20 @@ export default class UserManagementBackendApi{
   login(username, password){
     return axios.post(`${BASE_URL}/login`,
       qs.stringify({username, password}),
-      { headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+      { withCredentials: true, headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
       })
   }
 
   register(username, firstname, lastname, password){
-    return axios.post(`${BASE_URL}/register`,{username, firstname, lastname, password})
+    return axios.post(`${BASE_URL}/register`,
+    qs.stringify({username, password, firstname, lastname}),
+    { withCredentials: true, headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    })
+  }
+  profile(){
+    return axios.get(`${BASE_URL}/profile`, { withCredentials: true })
+  }
+  logout(){
+    return axios.get(`${BASE_URL}/logout`, { withCredentials: true })
   }
 }
