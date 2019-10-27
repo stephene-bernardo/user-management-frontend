@@ -1,21 +1,17 @@
 import React from 'react';
-import {useQuery, useMutation} from "@apollo/react-hooks";
-import gql from 'graphql-tag';
+import {useMutation} from "@apollo/react-hooks";
+
 import  { useRef } from 'react'
 import User from "./user";
 import { useHistory } from "react-router-dom";
 import UserLocalStorage from "./services/userLocalStorage";
+import {FETCH_USERS, 
+  CREATE_USER, 
+  DELETE_USER, UPDATE_USER,
+  DELETE_USER_AUTH, 
+  FETCH_USER_AUTH} from './gqlquery'
 
-const FETCH_USERS = gql`{users {id, firstName, lastName, userName}}`;
-const CREATE_USER = gql`mutation CreateUser($firstName: String!, $lastName: String!, $userName: String!)
-     {createUser(user: {firstName:$firstName, lastName:$lastName, userName: $userName}){id}}`;
-const DELETE_USER = gql `mutation DeleteUser($id:Int!){deleteUser(id: $id)}`;
-const UPDATE_USER = gql `mutation UpdateUser($id: Int!, $firstName: String!, $lastName: String!, $userName: String!)
-{updateUser(id: $id, userInput: {firstName: $firstName, lastName: $lastName, userName: $userName})}`
-const FETCH_USER_AUTH = gql `{userAuths {userId}}`;
-const DELETE_USER_AUTH = gql `mutation DeleteUserAuth($userId: Int!){deleteUserAuth(userId: $userId)}`;
-
-export default function UserManagement () {
+export default function UserManagement (props) {
   let userLocalStorage = new UserLocalStorage()
   let history = useHistory();
   if(!userLocalStorage.getUserId()){
@@ -25,8 +21,6 @@ export default function UserManagement () {
   const lastName = useRef(null);
   const userName = useRef(null);
 
-  const {data: userAuth} = useQuery(FETCH_USER_AUTH, {pollInterval: 1});
-  const {data} = useQuery(FETCH_USERS, {pollInterval: 1});
   const [CreateUser]= useMutation(CREATE_USER, {refetchQueries: mutationResult => [{query: FETCH_USERS}]})
   const [DeleteUser]= useMutation(DELETE_USER, {refetchQueries: mutationResult => [{query: FETCH_USERS}]})
   const [UpdateUser]= useMutation(UPDATE_USER, {refetchQueries: mutationResult => [{query: FETCH_USERS}]})
@@ -44,10 +38,10 @@ export default function UserManagement () {
     handleClear();
   }
   let tableEntry = [];
-  if(data && data.users){
-    tableEntry =  data.users.map(value => {
-        if(userAuth){
-          return {...value, hasPassword: !!userAuth.userAuths.find(auth => auth.userId === value.id)}
+  if(props.users && props.users.users){
+    tableEntry =  props.users.users.map(value => {
+        if(props.userAuth){
+          return {...value, hasPassword: !!props.userAuth.userAuths.find(auth => auth.userId === value.id)}
         }
         return {...value, hasPassword: false}
       })

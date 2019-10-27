@@ -9,9 +9,13 @@ import {
 import UserManagement from "./userManagement";
 import Home from "./home"
 import UserLocalStorage from "./services/userLocalStorage"
+import {useQuery} from "@apollo/react-hooks";
+import {FETCH_USER_AUTH, FETCH_USERS} from "./gqlquery"
 
 
 function App() {
+  const {data: userAuth} = useQuery(FETCH_USER_AUTH, {pollInterval: 2});
+  const {data: fetchUsers} = useQuery(FETCH_USERS, {pollInterval: 2});
   let userLocalStorage = new UserLocalStorage();
   let [firstName ,setFirstName] = useState(userLocalStorage.getFirstName);
   let [lastName ,setLastName] = useState(userLocalStorage.getLastName);
@@ -49,10 +53,13 @@ function App() {
       </nav>
       <Switch>
         <Route path="/user-management">
-          <UserManagement></UserManagement>
+          <UserManagement userAuth={userAuth} users={fetchUsers}></UserManagement>
         </Route>
         <Route path="/">
-          <Home changeFirstName={setFirstName} changeLastName={setLastName}></Home>
+          <Home userAuth={userAuth} 
+          changeFirstName={setFirstName} 
+          changeLastName={setLastName}>
+          </Home>
         </Route>
       </Switch>
     </Router>
