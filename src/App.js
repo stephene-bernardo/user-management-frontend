@@ -15,8 +15,8 @@ import UserManagementBackendApi from './services/userManagementBackendApi'
 
 
 function App() {
-  const {data: userAuth} = useQuery(FETCH_USER_AUTH, {pollInterval: 3});
-  const {data: fetchUsers} = useQuery(FETCH_USERS, {pollInterval: 3});
+  const {data: userAuth} = useQuery(FETCH_USER_AUTH, {pollInterval: 1000});
+  const {data: fetchUsers} = useQuery(FETCH_USERS, {pollInterval: 1000});
   let userManagementBackendApi = new UserManagementBackendApi();
   let [firstName ,setFirstName] = useState('');
   let [lastName ,setLastName] = useState('');
