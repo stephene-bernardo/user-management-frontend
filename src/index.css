@@ -44,3 +44,10 @@ div .greeting {
   font-size: 100px;
   text-transform: capitalize;
 }
+
+.error-message {
+  font-size: 0.75em;
+  color: red;
+  margin: 0px;
+  height: .75em;
+}

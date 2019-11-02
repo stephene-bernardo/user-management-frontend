@@ -13,20 +13,15 @@ export default function Home(props) {
   let history = useHistory();
   let userManagementBackendApi = new UserManagementBackendApi();
   function handleClick(username, password='') {
-    userManagementBackendApi.login(username, password).then((res)=>{
+    return userManagementBackendApi.login(username, password).then((res)=>{
+      console.log('login')
+      console.log(res)
       if(res.data.passport && res.data.passport.user.id) {
-        if(!!props.userAuth.userAuths.find(auth => auth.userId === res.data.passport.user.id)){
-          userManagementBackendApi.profile().then(res => {
-            if(res.data.passport && res.data.passport.user.firstName){
-              props.changeFirstName(res.data.passport.user.firstName);
-              props.changeLastName(res.data.passport.user.lastName);
-            }
-          })
-          history.push("/user-management");
-         
-        }
+          props.changeFirstName(res.data.passport.user.firstName);
+          props.changeLastName(res.data.passport.user.lastName);
+          history.push("/user-management"); 
       }
-    });
+    })
   }
   function handleRegister(username, firstname, lastname, password){
     userManagementBackendApi.register(username, firstname, lastname, password).then(res=> {
@@ -50,9 +45,7 @@ export default function Home(props) {
       )
     }
     return (
-      <div class="greeting">
-        Welcome {props.firstName} {props.lastName}
-      </div>
+      <div className="greeting">Welcome {props.firstName} {props.lastName}</div>
     )
 
   }
