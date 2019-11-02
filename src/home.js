@@ -39,12 +39,27 @@ export default function Home(props) {
       })
     })
   }
+  function greetingPage(){
+    if(!props.firstName){
+      return (
+        <React.Fragment>
+          <Register handleClick={handleRegister}/>
+          <Login handleClick={handleClick} modalShow={handleShow}/>
+          <ModalChangePassword show={show} handleShow={handleShow} handleClose={handleClose}/>
+        </React.Fragment>
+      )
+    }
+    return (
+      <div class="greeting">
+        Welcome {props.firstName} {props.lastName}
+      </div>
+    )
+
+  }
 
   return (
     <div className="containing-div">
-      <Register handleClick={handleRegister}/>
-      <Login handleClick={handleClick} modalShow={handleShow}/>
-      <ModalChangePassword show={show} handleShow={handleShow} handleClose={handleClose}/>
+      {greetingPage()}
     </div>
   )
 }

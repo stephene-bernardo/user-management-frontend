@@ -4,7 +4,6 @@ import {useMutation} from "@apollo/react-hooks";
 import  { useRef } from 'react'
 import User from "./user";
 import { useHistory } from "react-router-dom";
-import UserLocalStorage from "./services/userLocalStorage";
 import {FETCH_USERS, 
   CREATE_USER, 
   DELETE_USER, UPDATE_USER,
@@ -14,7 +13,6 @@ import UserManagementBackendApi from './services/userManagementBackendApi'
 
 export default function UserManagement (props) {
   let userManagementBackendApi = new UserManagementBackendApi();
-  let userLocalStorage = new UserLocalStorage()
   let history = useHistory();
   userManagementBackendApi.profile().then(res => {
     if(!res.data.passport || !res.data.passport.user.firstName){

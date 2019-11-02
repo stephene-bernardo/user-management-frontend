@@ -8,7 +8,6 @@ import {
 } from "react-router-dom";
 import UserManagement from "./userManagement";
 import Home from "./home"
-import UserLocalStorage from "./services/userLocalStorage"
 import {useQuery} from "@apollo/react-hooks";
 import {FETCH_USER_AUTH, FETCH_USERS} from "./gqlquery"
 import UserManagementBackendApi from './services/userManagementBackendApi'
@@ -63,8 +62,10 @@ function App() {
         </Route>
         <Route path="/">
           <Home userAuth={userAuth} 
-          changeFirstName={setFirstName} 
-          changeLastName={setLastName}>
+                changeFirstName={setFirstName} 
+                changeLastName={setLastName}
+                firstName={firstName}
+                lastName={lastName}>
           </Home>
         </Route>
       </Switch>
