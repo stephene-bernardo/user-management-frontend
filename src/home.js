@@ -8,14 +8,18 @@ import UserManagementBackendApi from './services/userManagementBackendApi'
 
 export default function Home(props) {
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setShow(false)
+  };
+  function refetchdetails() {
+    props.refetchUsers();
+    props.refetchUserAuth();
+  }
   const handleShow = () => setShow(true);
   let history = useHistory();
   let userManagementBackendApi = new UserManagementBackendApi();
   function handleClick(username, password='') {
     return userManagementBackendApi.login(username, password).then((res)=>{
-      console.log('login')
-      console.log(res)
       if(res.data.passport && res.data.passport.user.id) {
           props.changeFirstName(res.data.passport.user.firstName);
           props.changeLastName(res.data.passport.user.lastName);
@@ -24,11 +28,12 @@ export default function Home(props) {
     })
   }
   function handleRegister(username, firstname, lastname, password){
-    userManagementBackendApi.register(username, firstname, lastname, password).then(res=> {
+    return userManagementBackendApi.register(username, firstname, lastname, password).then(res=> {
       userManagementBackendApi.profile().then(res => {
         if(res.data.passport && res.data.passport.user.firstName){
           props.changeFirstName(res.data.passport.user.firstName);
           props.changeLastName(res.data.passport.user.lastName);
+          refetchdetails();
           history.push("/user-management/");
         }
       })
@@ -40,7 +45,12 @@ export default function Home(props) {
         <React.Fragment>
           <Register handleClick={handleRegister}/>
           <Login handleClick={handleClick} modalShow={handleShow}/>
-          <ModalChangePassword show={show} handleShow={handleShow} handleClose={handleClose}/>
+          <ModalChangePassword 
+          show={show} 
+          handleShow={handleShow} 
+          handleClose={handleClose}
+          refetchdetails={refetchdetails}
+          />
         </React.Fragment>
       )
     }

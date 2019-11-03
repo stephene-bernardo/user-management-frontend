@@ -14,8 +14,9 @@ import UserManagementBackendApi from './services/userManagementBackendApi'
 
 
 function App() {
-  const {data: userAuth} = useQuery(FETCH_USER_AUTH, {pollInterval: 1000});
-  const {data: fetchUsers} = useQuery(FETCH_USERS, {pollInterval: 1000});
+  const {data: userAuth, refetch: refetchUserAuth} = useQuery(FETCH_USER_AUTH, {pollInterval: 1000*10});
+  const {data: fetchUsers, refetch: refetchUsers} = useQuery(FETCH_USERS, {pollInterval: 1000*10});
+
   let userManagementBackendApi = new UserManagementBackendApi();
   let [firstName ,setFirstName] = useState('');
   let [lastName ,setLastName] = useState('');
@@ -65,6 +66,8 @@ function App() {
                 changeFirstName={setFirstName} 
                 changeLastName={setLastName}
                 firstName={firstName}
+                refetchUserAuth={refetchUserAuth}
+                refetchUsers={refetchUsers}
                 lastName={lastName}>
           </Home>
         </Route>

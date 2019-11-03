@@ -15,7 +15,10 @@ export default function ModalChangePassword (props){
     } else if(password.current.value !== password2.current.value) {
       setErrorMessage('Password does not match')
     }else {
-      userManagementBackendApi.changePassword(username.current.value, password.current.value)
+      userManagementBackendApi.changePassword(username.current.value, password.current.value).then(()=>{
+        props.refetchdetails();
+      })
+  
       props.handleClose();
       event.preventDefault();
     }

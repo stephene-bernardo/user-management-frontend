@@ -16,7 +16,7 @@ export default function Register(props){
   }
 
   return (
-    <form className="register" onSubmit={handleClick}>
+    <form className="register">
       <h1>Register User</h1>
       <div className="form-group">
         <label htmlFor="usernameInputRegister">Username</label>
@@ -35,7 +35,7 @@ export default function Register(props){
         <input type="password" ref={password} className="form-control" id="passwordInputRegister" placeholder="Password"/>
       </div>
 
-      <input  type="submit" value="Register & Login" />
+      <button onClick={handleClick}>Register & login</button>
     </form>
 
   )
