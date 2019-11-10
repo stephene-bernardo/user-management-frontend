@@ -21,7 +21,7 @@ function App() {
   let [firstName ,setFirstName] = useState('');
   let [lastName ,setLastName] = useState('');
   userManagementBackendApi.profile().then(res => {
-    if(res.data.passport && res.data.passport.user.firstName){
+    if(res && res.data && res.data.passport && res.data.passport.user.firstName){
       setFirstName(res.data.passport.user.firstName);
       setLastName(res.data.passport.user.lastName);
     }

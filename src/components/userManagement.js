@@ -14,8 +14,10 @@ import UserManagementBackendApi from '../services/userManagementBackendApi'
 export default function UserManagement (props) {
   let userManagementBackendApi = new UserManagementBackendApi();
   let history = useHistory();
+ 
   userManagementBackendApi.profile().then(res => {
-    if(!res.data.passport || !res.data.passport.user.firstName){
+    // console.log(res.data)
+    if(res.data && (!res.data.passport || !res.data.passport.user.firstName)){
      history.push("/");
     }
   }).catch(()=>{
