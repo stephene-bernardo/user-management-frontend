@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import Login from './login'
 import Register from './register'
 import ModalChangePassword from "./modalChangePassword";
-import UserManagementBackendApi from './services/userManagementBackendApi'
+import UserManagementBackendApi from '../services/userManagementBackendApi'
 
 
 export default function Home(props) {

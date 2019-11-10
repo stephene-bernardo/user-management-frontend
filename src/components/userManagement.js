@@ -8,8 +8,8 @@ import {FETCH_USERS,
   CREATE_USER, 
   DELETE_USER, UPDATE_USER,
   DELETE_USER_AUTH, 
-  FETCH_USER_AUTH} from './gqlquery'
-import UserManagementBackendApi from './services/userManagementBackendApi'
+  FETCH_USER_AUTH} from '../gqlquery'
+import UserManagementBackendApi from '../services/userManagementBackendApi'
 
 export default function UserManagement (props) {
   let userManagementBackendApi = new UserManagementBackendApi();

@@ -9,8 +9,8 @@ import {
 import UserManagement from "./userManagement";
 import Home from "./home"
 import {useQuery} from "@apollo/react-hooks";
-import {FETCH_USER_AUTH, FETCH_USERS} from "./gqlquery"
-import UserManagementBackendApi from './services/userManagementBackendApi'
+import {FETCH_USER_AUTH, FETCH_USERS} from "../gqlquery"
+import UserManagementBackendApi from '../services/userManagementBackendApi'
 
 
 function App() {

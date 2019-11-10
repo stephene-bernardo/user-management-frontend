@@ -1,6 +1,6 @@
 import Modal from "react-bootstrap/Modal";
 import React, {useRef, useState} from "react";
-import UserManagementBackendApi from './services/userManagementBackendApi'
+import UserManagementBackendApi from '../services/userManagementBackendApi'
 
 export default function ModalChangePassword (props){
   const username = useRef(null);
